@@ -102,6 +102,28 @@ class AccountModel extends Account implements IdentityInterface
         return true;
     }
 
+    public function getStatusText()
+    {
+        $result = '未知错误';
+        switch ($this->status) {
+            case self::STATUS_DEL:
+                $result = '不存在';
+                break;
+            case self::STATUS_ON:
+                $result = '正常';
+                break;
+            case self::STATUS_OFF:
+                $result = '已停用';
+                break;
+            case self::STATUS_INIT:
+                $result = '未激活';
+                break;
+            default:
+                break;
+        }
+        return $result;
+    }
+
     public function refreshAuthKey()
     {
         if ($this->token != null) {

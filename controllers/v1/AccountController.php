@@ -8,8 +8,7 @@
 
 namespace app\controllers\v1;
 
-
-use app\components\CommonUtils;
+use app\components\auth\AuthAccessToken;
 use app\models\AccountModel;
 use Yii;
 use yii\rest\ActiveController;
@@ -29,6 +28,18 @@ class AccountController extends ActiveController
         unset($actions['index']);
         unset($actions['update']);
         unset($actions['delete']);
+    }
+
+    public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+        unset($behaviors['authenticator']);
+        $behaviors['authenticator'] = [
+            'class' => AuthAccessToken::class,
+            'permission' => false,
+            'except' => ['login', 'create']
+        ];
+        return $behaviors;
     }
 
     public function actionCreate()
@@ -72,7 +83,6 @@ class AccountController extends ActiveController
     public function actionLogin()
     {
         $params = json_decode(file_get_contents("php://input"), true);
-        CommonUtils::log($params['password'],'debug.log');
         $account = $this->verifyLoginParams($params);
         $account->refreshAuthKey();
         return [

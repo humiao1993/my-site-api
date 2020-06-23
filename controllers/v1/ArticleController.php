@@ -8,6 +8,7 @@
 
 namespace app\controllers\v1;
 
+use app\components\auth\AuthAccessToken;
 use app\models\ArticleModel;
 use yii\data\ActiveDataProvider;
 use yii\rest\ActiveController;
@@ -27,6 +28,17 @@ class ArticleController extends ActiveController
         unset($actions['update']);
         unset($actions['delete']);
         return $actions;
+    }
+
+    public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+        unset($behaviors['authenticator']);
+        $behaviors['authenticator'] = [
+            'class' => AuthAccessToken::class,
+            'permission' => false,
+        ];
+        return $behaviors;
     }
 
     public function actionIndex($keyword = null, $order_by = 'id DESC')
