@@ -16,6 +16,7 @@ use yii\web\HttpException;
 class AuthorController extends ActiveController
 {
     public $modelClass = 'app\models\AuthorModel';
+    public $serializer = ['class' => 'yii\rest\Serializer', 'collectionEnvelope' => 'items'];
 
     public function actions()
     {

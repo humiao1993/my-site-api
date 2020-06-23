@@ -18,6 +18,7 @@ class AccountController extends ActiveController
 {
 
     public $modelClass = 'app\models\AccountModel';
+    public $serializer = ['class' => 'yii\rest\Serializer', 'collectionEnvelope' => 'items'];
 
     public function actions()
     {
