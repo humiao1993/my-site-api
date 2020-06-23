@@ -84,7 +84,6 @@ class AccountController extends ActiveController
     {
         $params = json_decode(file_get_contents("php://input"), true);
         $account = $this->verifyLoginParams($params);
-        $account->refreshAuthKey();
         return [
             'account' => $account,
             'token' => $account->getAuthKey(),

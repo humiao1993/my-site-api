@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: admin
- * Date: 2020/6/23
- * Time: 14:24
- */
+
 namespace app\components\auth;
 
 use app\models\AccountModel;
